@@ -1,2 +1,5 @@
 # Visual-Computing
-Welcome to the Visual Computing Repository at Universidad Nacional de Colombia (UNAL), your go-to resource for exploring the dynamic world of creative coding and visual computing using Processing.
+
+
+https://github.com/dimolinas/Visual-Computing/assets/55567041/a22daf76-2d6f-407a-8a3a-31e0dc225252
+
