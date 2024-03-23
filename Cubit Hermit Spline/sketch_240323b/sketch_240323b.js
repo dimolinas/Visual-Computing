@@ -1,7 +1,12 @@
-let points = [], detail = 100;
+let points = [], detail = 30;
 
 function setup() {
   createCanvas(680, 480);
+  
+  points.push(createVector(50, 50));
+  points.push(createVector(50, 300));
+  points.push(createVector(400, 300));
+  points.push(createVector(400, 50));
 }
 
 
@@ -10,49 +15,51 @@ function draw() {
   
   fill(255, 0, 0);
   points.forEach(p => ellipse(p.x, p.y, 10, 10));
-  
-  for (let i=0; i < points.length; i++) {
-    const p0 = points[i];
-    const p1 = points[(i+1) % points.length];
-    const p2 = points[(i+2) % points.length];
-    const p3 = points[(i+3) % points.length];
-    
-    drawLine(p0, p1, p2, p3);
-  }
-  
+
+  points[3].x = mouseX;
+  points[3].y = mouseY;
+
+  drawBezier(points[0], points[1], points[2], points[3]);
 }
 
-function drawLine(p0, p1, p2, p3) {
-  const v0 = createVector(
-    (p2.x - p0.x) / 2,
-    (p2.y - p0.y) / 2);
-    
-  const v1 = createVector(
-    (p3.x - p1.x) / 2,
-    (p3.y - p1.y) / 2);
+function drawBezier(p0, p1, p2, p3) {
   
-  for (let t=0; t<=1; t+=1/detail){
-    const t2 = t*t;
-    const t3 = t2*t;
+  for (let t=0; t<=1; t += 1/detail) {
+    const p01x = linear(p0.x, p1.x, t);
+    const p12x = linear(p1.x, p2.x, t);
+    const p23x = linear(p2.x, p3.x, t);
     
-    const H0 =  2*t3 - 3*t2     + 1;
-    const H1 = -2*t3 + 3*t2        ;
-    const H2 =    t3 - 2*t2 + t    ;
-    const H3 =    t3 -   t2        ;
+    const p01y = linear(p0.y, p1.y, t);
+    const p12y = linear(p1.y, p2.y, t);
+    const p23y = linear(p2.y, p3.y, t);
     
-    const x = H0*p1.x + H1*p2.x +
-              H2*v0.x + H3*v1.x;
-    const y = H0*p1.y + H1*p2.y +
-              H2*v0.y + H3*v1.y;
-
-    fill(255, 255, 255);
+    stroke(0);
+    line(p01x, p01y, p12x, p12y);
+    line(p12x, p12y, p23x, p23y);
+    
+    const q0x = linear(p01x, p12x, t);
+    const q0y = linear(p01y, p12y, t);
+    
+    const q1x = linear(p12x, p23x, t);
+    const q1y = linear(p12y, p23y, t);
+    
+    fill(0, 0, 255);
+    ellipse(q0x, q0y, 10, 10);
+    ellipse(q1x, q1y, 10, 10);
+    
+    stroke(0,255, 0);
+    line(q0x, q0y, q1x, q1y);
+    
+    const x = linear(q0x, q1x, t);
+    const y = linear(q0y, q1y, t);
+    
+    fill(255, 255, 0);
     ellipse(x, y, 10, 10);
     
   }
+
 }
 
-
-function mousePressed() {
-  const p = createVector(mouseX, mouseY);
-  points.push(p);
+function linear(p0, p1, t) {
+  return t * p0 + (1-t) * p1;
 }
