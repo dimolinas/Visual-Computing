@@ -1,28 +1,20 @@
-let button;
-
 class Game{
-  
   constructor(){
     this.drawBoard();
-    
-    this._play = false;
+    this.play = false;
     this.musicIsPlaying = false;
     
-    button = createButton('Play');
-    button.id('playButton');
-    button.position(10, 10);
+    let buttonPlay = createButton('Play');
+    buttonPlay.id('playButton');
+    buttonPlay.position(10, 10);
     
-    button.mousePressed(this.startGame.bind(this));
+    let buttonStop = createButton('Stop');
+    buttonStop.id('stopButton');
+    buttonStop.position(60, 10);
+    
+    buttonPlay.mousePressed(this.startGame.bind(this));
+    buttonStop.mousePressed(this.stopGame.bind(this));
   }
-  
-  get play() {
-    return this._play;
-  }
-
-  set play(value) {
-    this._play = value;
-  }
-
   
   drawBoard() {
     for (let i=0; i<=hight * scale; i+=scale) {
@@ -41,14 +33,20 @@ class Game{
   }
   
   startGame() {
-    print("Start game");
     if(!this.musicIsPlaying){
       this.musicIsPlaying = true;
       song.play();
       song.setVolume(0.8);
     }
-    
-    this.play = !this.play;
+    this.play = true;
+  }
+  
+  stopGame(){
+   if(this.musicIsPlaying){
+      song.stop();
+      this.play = false;
+      this.musicIsPlaying = false;
+    }
   }
     
   keyPressed(keycode){

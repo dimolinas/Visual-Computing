@@ -31,6 +31,5 @@ class Block{
       this.active = false;
       this.speed = createVector(0, 0, 0);
     }
-    
   }
 }

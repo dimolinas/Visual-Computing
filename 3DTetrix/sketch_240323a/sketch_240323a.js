@@ -6,7 +6,17 @@ let newBlock;
 
 function preload() {
   soundFormats('mp3', 'ogg');
-  song = loadSound('music.mp3');
+  song = loadSound('music.mp3', () => {
+    song.onended(restartMusic);
+  });
+}
+
+function restartMusic() {
+  if (game.play) {
+    song.play();
+  } else {
+    song.stop();
+  }
 }
 
 function setup() {
@@ -29,9 +39,6 @@ function draw() {
   if(game.play){
     newBlock.update();
   }
-  
-  print(game.play);
-  
   
   newBlock.render();
 
