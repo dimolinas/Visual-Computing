@@ -1,10 +1,13 @@
 let scale = 20, hight;
-let defaultVel = -0.5;
+let defaultVel = -0.2;
+
+let font;
 let song;
 let game;
 let newBlock;
 
 function preload() {
+  font = loadFont('Tetris.ttf');
   soundFormats('mp3', 'ogg');
   song = loadSound('music.mp3', () => {
     song.onended(restartMusic);
@@ -35,20 +38,22 @@ function draw() {
   rotateZ(HALF_PI/2);
 
   game.drawBoard();
+  game.displayPoints();
   
   if(game.play){
     newBlock.update();
+    print(newBlock.pos.x, newBlock.pos.y);
   }
   
   newBlock.render();
 
   push();
-  stroke('white');
-  line(0, 0, 0, 0, 0, 400);
-  stroke('red');
-  line(0, 0, 0, 0, 400, 0);
-  stroke('green');
-  line(0, 0, 0, 400, 0, 0);
+  //stroke('white');
+  //line(0, 0, 0, 0, 0, 400);
+  //stroke('red');
+  //line(0, 0, 0, 0, 400, 0);
+  //stroke('green');
+  //line(0, 0, 0, 400, 0, 0);
   pop();
  
 }

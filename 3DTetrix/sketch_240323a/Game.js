@@ -1,9 +1,15 @@
 class Game{
   constructor(){
     this.drawBoard();
+    this.displayButton();
+
     this.play = false;
     this.musicIsPlaying = false;
-    
+    this.defaultVelZ = -0.2;
+    this.points = 100;
+  }
+  
+  displayButton(){
     let buttonPlay = createButton('Play');
     buttonPlay.id('playButton');
     buttonPlay.position(10, 10);
@@ -14,6 +20,14 @@ class Game{
     
     buttonPlay.mousePressed(this.startGame.bind(this));
     buttonStop.mousePressed(this.stopGame.bind(this));
+  }
+  
+  displayPoints() {
+    push()
+    textSize(24);
+    textFont(font);
+    text(`Points: ${this.points}`, 150, 230, 230);
+    pop();
   }
   
   drawBoard() {
@@ -51,13 +65,13 @@ class Game{
     
   keyPressed(keycode){
     if (keyCode === RIGHT_ARROW) {
-      newBlock.dir(scale, 0, defaultVel);
+      newBlock.dir(scale, 0, 0);
     } else if (keyCode === LEFT_ARROW) {
-      newBlock.dir(-scale, 0, defaultVel);
+      newBlock.dir(-scale, 0, 0);
     } else if (keyCode === UP_ARROW) {
-      newBlock.dir(0, scale, defaultVel);
+      newBlock.dir(0, scale, 0);
     } else if (keyCode === DOWN_ARROW) {
-      newBlock.dir(0, -scale, defaultVel);
+      newBlock.dir(0, -scale, 0);
     }
   }
 }
