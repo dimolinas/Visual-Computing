@@ -1,4 +1,5 @@
-let scale = 20, hight;
+let cellSize = 20;
+let dimension = 10;
 let defaultVel = -0.2;
 
 let font;
@@ -24,7 +25,6 @@ function restartMusic() {
 
 function setup() {
   createCanvas(600, 800, WEBGL);
-  hight = 10;
   
   game = new Game();
   newBlock = new Block(defaultVel);
@@ -32,12 +32,13 @@ function setup() {
 
 function draw() {
   background(0);
+  
   orbitControl();
   rectMode(CENTER);
   rotateX(1/2* HALF_PI + 0.2);
   rotateZ(HALF_PI/2);
 
-  game.drawBoard();
+  game.displayBoard();
   game.displayPoints();
   
   if(game.play){
@@ -48,12 +49,12 @@ function draw() {
   newBlock.render();
 
   push();
-  //stroke('white');
-  //line(0, 0, 0, 0, 0, 400);
-  //stroke('red');
-  //line(0, 0, 0, 0, 400, 0);
-  //stroke('green');
-  //line(0, 0, 0, 400, 0, 0);
+  stroke('white');
+  line(0, 0, 0, 0, 0, 400);
+  stroke('red');
+  line(0, 0, 0, 0, 400, 0);
+  stroke('green');
+  line(0, 0, 0, 400, 0, 0);
   pop();
  
 }

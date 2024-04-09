@@ -1,15 +1,16 @@
 class Game{
   constructor(){
-    this.drawBoard();
-    this.displayButton();
-
     this.play = false;
     this.musicIsPlaying = false;
+    
     this.defaultVelZ = -0.2;
     this.points = 100;
+    
+    this.displayButtons();
+    this.board = new Board();
   }
   
-  displayButton(){
+  displayButtons(){
     let buttonPlay = createButton('Play');
     buttonPlay.id('playButton');
     buttonPlay.position(10, 10);
@@ -23,27 +24,16 @@ class Game{
   }
   
   displayPoints() {
-    push()
+    push();
     textSize(24);
     textFont(font);
     text(`Points: ${this.points}`, 150, 230, 230);
     pop();
   }
   
-  drawBoard() {
-    for (let i=0; i<=hight * scale; i+=scale) {
-      push();
-      stroke('white')
-      line(i, 0, 0, i, 0, scale * 10);
-      line(0, i, 0, 0, i, scale * 10);
-  
-      line(0, 0, i, scale * 10, 0, i);
-      line(0, i, 0, scale * 10, i, 0);
-  
-      line(0, 0, i, 0, scale * 10, i);
-      line(i, 0, 0, i, scale * 10, 0);
-      pop();
-    }
+  displayBoard(){
+    this.board.drawLines();
+    this.board.draw();
   }
   
   startGame() {
