@@ -28,7 +28,7 @@ function setup() {
  
   game = new Game();
   newBlock = new Block(defaultVel);
-  newTest = new TTetromino();
+  newTest = new SquareTetromino();
 }
 
 function setupCamera(){
