@@ -28,6 +28,7 @@ function setup() {
  
   game = new Game();
   newBlock = new Block(defaultVel);
+  newTest = new LBlock();
 }
 
 function setupCamera(){
@@ -46,10 +47,12 @@ function draw() {
   
   if(game.play){
     newBlock.update();
+    
     print(newBlock.pos.x, newBlock.pos.y);
   }
   
-  newBlock.render();
+  //newBlock.render();
+  newTest.render();
 
   push();
   stroke('white');

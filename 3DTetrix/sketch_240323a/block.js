@@ -7,7 +7,6 @@ class Block{
   }
   
   down(){
-    print("hello");
     setTimeout(this.down.bind(this), 1000);
     if(this.pos.z >= cellSize){
       this.pos.z += -cellSize;  
@@ -54,12 +53,10 @@ class Block{
     this.speed.x = 0;
     this.speed.y = 0;
     
-    // Check boundaries
     if (this.pos.x <= 0) {
       this.pos.x = 0;
       this.speed.x = 0;
     }
-    
     
     if(this.pos.z === 0) {
       this.active = false;
