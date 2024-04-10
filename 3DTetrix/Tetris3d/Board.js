@@ -42,6 +42,5 @@ class Board extends Cube{
       Array.from({ length: dimension }, () => 
         Array.from({ length: dimension }, () => 0)
       ));
-  } 
-     
+  }  
 }

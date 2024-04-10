@@ -8,9 +8,9 @@ let game;
 let newBlock;
 
 function preload() {
-  font = loadFont('Tetris.ttf');
+  font = loadFont('assets/Tetris.ttf');
   soundFormats('mp3', 'ogg');
-  song = loadSound('music.mp3', () => {
+  song = loadSound('assets/music.mp3', () => {
     song.onended(restartMusic);
   });
 }
@@ -28,7 +28,7 @@ function setup() {
  
   game = new Game();
   newBlock = new Block(defaultVel);
-  newTest = new SquareTetromino();
+  newTest = new LTetromino();
 }
 
 function setupCamera(){
@@ -47,7 +47,6 @@ function draw() {
   
   if(game.play){
     newBlock.update();
-    
     print(newBlock.pos.x, newBlock.pos.y);
   }
   

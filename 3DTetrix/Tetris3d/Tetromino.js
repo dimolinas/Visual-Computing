@@ -14,8 +14,10 @@ class Tetromino extends Cube{
   
   down(){
     setTimeout(this.down.bind(this), 1000);
-    for(let cell of this.cells){
+    if(game.play){
+      for(let cell of this.cells){
       cell.z -= 1;
+      }
     }
   }
   
