@@ -28,7 +28,7 @@ function setup() {
  
   game = new Game();
   newBlock = new Block(defaultVel);
-  newTest = new LTetromino();
+  newTest = new SkewTetromino();
 }
 
 function setupCamera(){
@@ -65,5 +65,5 @@ function draw() {
 }
 
 function keyPressed(){
-  game.keyPressed(keyCode);
+  newTest.keyPressed(keyCode);
 }

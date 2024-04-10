@@ -3,7 +3,7 @@ class Tetromino extends Cube{
     super();
     this.color = "";
     this.cells = [];
-    setTimeout(this.down.bind(this), 1000);
+    setTimeout(this.moveBackwardZ.bind(this), 1000);
   }
   
   render(){
@@ -12,8 +12,8 @@ class Tetromino extends Cube{
     }
   }
   
-  down(){
-    setTimeout(this.down.bind(this), 1000);
+  moveBackwardZ(){
+    setTimeout(this.moveBackwardZ.bind(this), 1000);
     if(game.play){
       for(let cell of this.cells){
       cell.z -= 1;
@@ -21,4 +21,39 @@ class Tetromino extends Cube{
     }
   }
   
+  moveForwardX(){
+    if(game.play){
+      for(let cell of this.cells){
+      cell.x += 1;
+      }
+    }
+  }
+  
+  moveBackwardX(){
+    if(game.play){
+      for(let cell of this.cells){
+      cell.x -= 1;
+      }
+    }
+  }
+  
+  moveForwardY(){
+    if(game.play){
+      for(let cell of this.cells){
+      cell['y'] += 1;
+      }
+    }
+  }
+  
+  keyPressed(keycode){
+    if (keyCode === RIGHT_ARROW) {
+      this.moveForwardX();
+    } else if (keyCode === LEFT_ARROW) {
+      this.moveBackwardX();
+    } else if (keyCode === UP_ARROW) {
+      this.moveForwardY();
+    } else if (keyCode === DOWN_ARROW) {
+      newBlock.dir(0, -scale, 0);
+    }
+  } 
 }

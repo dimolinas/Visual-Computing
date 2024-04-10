@@ -53,15 +53,5 @@ class Game{
     }
   }
     
-  keyPressed(keycode){
-    if (keyCode === RIGHT_ARROW) {
-      newBlock.dir(scale, 0, 0);
-    } else if (keyCode === LEFT_ARROW) {
-      newBlock.dir(-scale, 0, 0);
-    } else if (keyCode === UP_ARROW) {
-      newBlock.dir(0, scale, 0);
-    } else if (keyCode === DOWN_ARROW) {
-      newBlock.dir(0, -scale, 0);
-    }
-  }
+  
 }
