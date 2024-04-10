@@ -25,18 +25,21 @@ function restartMusic() {
 
 function setup() {
   createCanvas(600, 800, WEBGL);
-  
+ 
   game = new Game();
   newBlock = new Block(defaultVel);
 }
 
-function draw() {
-  background(0);
-  
+function setupCamera(){
   orbitControl();
   rectMode(CENTER);
   rotateX(1/2* HALF_PI + 0.2);
   rotateZ(HALF_PI/2);
+}
+
+function draw() {
+  background(0);
+  setupCamera();
 
   game.displayBoard();
   game.displayPoints();

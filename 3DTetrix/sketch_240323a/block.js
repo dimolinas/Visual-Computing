@@ -9,7 +9,9 @@ class Block{
   down(){
     print("hello");
     setTimeout(this.down.bind(this), 1000);
-    this.pos.z += -cellSize;  
+    if(this.pos.z >= cellSize){
+      this.pos.z += -cellSize;  
+    }
   }
   
   render(){
@@ -56,26 +58,8 @@ class Block{
     if (this.pos.x <= 0) {
       this.pos.x = 0;
       this.speed.x = 0;
-    } else if (this.pos.x >= hight * cellSize) {
-      this.pos.x = hight * cellSize - cellSize;
-      this.speed.x = 0;
     }
-
-    if (this.pos.y <= 0) {
-      this.pos.y = 0;
-      this.speed.y = 0;
-    } else if (this.pos.y >= hight * cellSize) {
-      this.pos.y = hight * cellSize - cellSize;
-      this.speed.y = 0;
-    }
-
-    if (this.pos.z <= 0) {
-      this.pos.z = 0;
-      this.speed.z = 0;
-    } else if (this.pos.z >= hight * cellSize) {
-      this.pos.z = hight * cellSize - cellSize;
-      this.speed.z = 0;
-    }
+    
     
     if(this.pos.z === 0) {
       this.active = false;
