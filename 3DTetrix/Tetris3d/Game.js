@@ -4,7 +4,7 @@ class Game{
     this.musicIsPlaying = false;
     
     this.defaultVelZ = -0.2;
-    this.points = 100;
+    this.points = 0;
     
     this.displayButtons();
     this.board = new Board();

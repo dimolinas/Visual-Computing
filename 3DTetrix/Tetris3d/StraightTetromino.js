@@ -1,7 +1,7 @@
 class StraightTetromino extends Tetromino{
   constructor(){
     super();
-    this.colorCube = '#0000FF';
+    this.colorCube = '#0099FF';
     this.cells = [ 
       createVector(0, 0, 10),
       createVector(1, 0, 10),

@@ -6,6 +6,9 @@ let song;
 let game;
 let factory;
 
+let activeTetromino = null;
+let tetrominos = [];
+
 function preload() {
   font = loadFont('assets/Tetris.ttf');
   soundFormats('mp3', 'ogg');
@@ -26,14 +29,8 @@ function setup() {
   createCanvas(600, 800, WEBGL);
   game = new Game();
   factory = new TetrominoFactory();
-  newTest = factory.createRandomTetromino();
-}
-
-function setupCamera(){
-  orbitControl();
-  rectMode(CENTER);
-  rotateX(1/2* HALF_PI + 0.2);
-  rotateZ(HALF_PI/2);
+  activeTetromino = factory.createRandomTetromino()
+  tetrominos.push(activeTetromino);
 }
 
 function draw() {
@@ -43,7 +40,7 @@ function draw() {
   game.displayBoard();
   game.displayPoints();
 
-  newTest.render();
+  drawTetrominos();
 
   push();
   stroke('white');
@@ -53,9 +50,21 @@ function draw() {
   stroke('green');
   line(0, 0, 0, 400, 0, 0);
   pop();
- 
 }
 
 function keyPressed(){
-  newTest.keyPressed(keyCode);
+  activeTetromino.keyPressed(keyCode);
+}
+
+function drawTetrominos(){
+  for(let tetromino of tetrominos){
+    tetromino.render();
+  }
+}
+
+function setupCamera(){
+  orbitControl();
+  rectMode(CENTER);
+  rotateX(1/2* HALF_PI + 0.2);
+  rotateZ(HALF_PI/2);
 }
