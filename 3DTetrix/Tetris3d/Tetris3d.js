@@ -1,11 +1,10 @@
 let cellSize = 20;
 let dimension = 10;
-let defaultVel = -0.2;
 
 let font;
 let song;
 let game;
-let newBlock;
+let factory;
 
 function preload() {
   font = loadFont('assets/Tetris.ttf');
@@ -25,10 +24,9 @@ function restartMusic() {
 
 function setup() {
   createCanvas(600, 800, WEBGL);
- 
   game = new Game();
-  newBlock = new Block(defaultVel);
-  newTest = new SkewTetromino();
+  factory = new TetrominoFactory();
+  newTest = factory.createRandomTetromino();
 }
 
 function setupCamera(){
@@ -44,13 +42,7 @@ function draw() {
 
   game.displayBoard();
   game.displayPoints();
-  
-  if(game.play){
-    newBlock.update();
-    print(newBlock.pos.x, newBlock.pos.y);
-  }
-  
-  //newBlock.render();
+
   newTest.render();
 
   push();

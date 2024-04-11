@@ -1,59 +1,48 @@
 class Tetromino extends Cube{
   constructor(){
     super();
-    this.color = "";
+    this.colorCube = null;
+    this.active = true;
     this.cells = [];
     setTimeout(this.moveBackwardZ.bind(this), 1000);
   }
   
   render(){
     for(let cell of this.cells){
-      this.drawCube(cell.x, cell.y, cell.z);
+      this.drawCube(cell.x, cell.y, cell.z, this.colorCube);
+    }
+  }
+  
+  moveBackward(dir){
+    if(game.play){
+      for(let cell of this.cells){
+      cell[dir] -= 1;
+      }
+    }
+  }
+  
+  moveForward(dir){
+    if(game.play){
+      for(let cell of this.cells){
+      cell[dir] += 1;
+      }
     }
   }
   
   moveBackwardZ(){
     setTimeout(this.moveBackwardZ.bind(this), 1000);
-    if(game.play){
-      for(let cell of this.cells){
-      cell.z -= 1;
-      }
-    }
-  }
-  
-  moveForwardX(){
-    if(game.play){
-      for(let cell of this.cells){
-      cell.x += 1;
-      }
-    }
-  }
-  
-  moveBackwardX(){
-    if(game.play){
-      for(let cell of this.cells){
-      cell.x -= 1;
-      }
-    }
-  }
-  
-  moveForwardY(){
-    if(game.play){
-      for(let cell of this.cells){
-      cell['y'] += 1;
-      }
-    }
+     this.moveBackward('z');
   }
   
   keyPressed(keycode){
     if (keyCode === RIGHT_ARROW) {
-      this.moveForwardX();
+      this.moveForward('x');
     } else if (keyCode === LEFT_ARROW) {
-      this.moveBackwardX();
+      this.moveBackward('x');
     } else if (keyCode === UP_ARROW) {
-      this.moveForwardY();
+      this.moveForward('y');
     } else if (keyCode === DOWN_ARROW) {
-      newBlock.dir(0, -scale, 0);
+      this.moveBackward('y');
     }
   } 
 }
