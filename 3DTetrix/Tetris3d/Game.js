@@ -2,8 +2,7 @@ class Game{
   constructor(){
     this.play = false;
     this.musicIsPlaying = false;
-    
-    this.defaultVelZ = -0.2;
+   
     this.points = 0;
     
     this.displayButtons();
@@ -34,6 +33,15 @@ class Game{
   displayBoard(){
     this.board.drawLines();
     this.board.draw();
+  }
+  
+  update(){
+    for(let k = 0; k < dimension; k++){
+       if(this.board.verifyIsLayerComplete(k)){
+        this.board.cleanLayer(k);
+        this.points += (k+1) * 100; 
+      }
+    } 
   }
   
   startGame() {

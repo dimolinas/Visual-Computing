@@ -1,5 +1,8 @@
 let cellSize = 20;
 let dimension = 10;
+let delta = cellSize/2;
+
+let timeFrecuency = 1000;
 
 let font;
 let song;
@@ -39,17 +42,9 @@ function draw() {
 
   game.displayBoard();
   game.displayPoints();
-
+  game.update();
+  
   drawTetrominos();
-
-  push();
-  stroke('white');
-  line(0, 0, 0, 0, 0, 400);
-  stroke('red');
-  line(0, 0, 0, 0, 400, 0);
-  stroke('green');
-  line(0, 0, 0, 400, 0, 0);
-  pop();
 }
 
 function keyPressed(){

@@ -1,12 +1,13 @@
 class Cube{
   constructor(){
-    this.delta = this.delta = cellSize/2;
+    this.active = false;
+    this.colorCube = '';
   }
   
-  drawCube(i, j, k, colorCube){
+  drawCube(i, j, k){
     push();
-    fill(colorCube ? colorCube : '#ffffff');
-    translate(i * cellSize + this.delta, j * cellSize + this.delta, k * cellSize + this.delta);
+    fill(this.colorCube ? this.colorCube : '#ffffff');
+    translate(i * cellSize + delta, j * cellSize + delta, k * cellSize + delta);
     box(cellSize);
     pop();
   }
