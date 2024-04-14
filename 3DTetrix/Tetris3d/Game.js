@@ -4,10 +4,15 @@ class Game{
     this.musicIsPlaying = false;
    
     this.points = 0;
+    this.fallFrecuency = 1000;
     
     this.displayButtons();
+    
     this.board = new Board();
+    this.activeTetromino = null;
+    this.tetrominos = [];
   }
+  
   
   displayButtons(){
     let buttonPlay = createButton('Play');
@@ -35,13 +40,39 @@ class Game{
     this.board.draw();
   }
   
+  drawTetrominos(){
+    for(let tetromino of this.tetrominos){
+      tetromino.render();
+    }
+  }
+  
   update(){
     for(let k = 0; k < dimension; k++){
-       if(this.board.verifyIsLayerComplete(k)){
+      if(this.board.verifyIsLayerComplete(k)){
         this.board.cleanLayer(k);
         this.points += (k+1) * 100; 
       }
-    } 
+    }
+    this.checkLost();
+  }
+  
+  checkLost(){
+    if(this.board.verifyCubeInLayer(10) || this.board.verifyCubeInLayer(11)){
+      this.clean();
+      this.stopGame();
+      this.init();
+    }
+  }
+  
+  clean(){
+    this.points = 0;
+    this.board = new Board();
+    this.tetrominos = [];
+  }
+  
+  init(){
+    this.activeTetromino = factory.createRandomTetromino();
+    this.tetrominos.push(this.activeTetromino);
   }
   
   startGame() {

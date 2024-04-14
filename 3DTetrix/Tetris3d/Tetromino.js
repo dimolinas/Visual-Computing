@@ -5,7 +5,7 @@ class Tetromino extends Cube{
     this.active = true;
     this.blocked = false;
     this.cells = [];
-    setTimeout(this.falling.bind(this), timeFrecuency);
+    setTimeout(this.falling.bind(this), game.fallFrecuency);
   }
   
   render(){
@@ -23,8 +23,8 @@ class Tetromino extends Cube{
      }else{
        if(this.active){
          this.saveInMemory();
-         activeTetromino = factory.createRandomTetromino()
-         tetrominos.push(activeTetromino);
+         game.activeTetromino = factory.createRandomTetromino()
+         game.tetrominos.push(game.activeTetromino);
        }
        this.active = false;
      }

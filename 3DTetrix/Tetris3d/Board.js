@@ -12,7 +12,19 @@ class Board extends Cube{
   }
   
   applyGravity(){
-    setTimeout(this.applyGravity.bind(this), 1000);
+    setTimeout(this.applyGravity.bind(this), game.fallFrecuency);
+  }
+  
+  verifyCubeInLayer(k){
+    let isCube = false;
+      for(let i = 0; i < dimension; i++){
+        for(let j = 0; j < dimension; j++){
+          if(this.matrix[i][j][k].active){
+            return true;
+          }
+        }
+      }
+      return isCube;
   }
   
   verifyIsLayerComplete(k){

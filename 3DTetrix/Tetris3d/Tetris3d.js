@@ -2,15 +2,10 @@ let cellSize = 20;
 let dimension = 10;
 let delta = cellSize/2;
 
-let timeFrecuency = 1000;
-
 let font;
 let song;
 let game;
 let factory;
-
-let activeTetromino = null;
-let tetrominos = [];
 
 function preload() {
   font = loadFont('assets/Tetris.ttf');
@@ -32,8 +27,7 @@ function setup() {
   createCanvas(600, 800, WEBGL);
   game = new Game();
   factory = new TetrominoFactory();
-  activeTetromino = factory.createRandomTetromino()
-  tetrominos.push(activeTetromino);
+  game.init();
 }
 
 function draw() {
@@ -41,20 +35,13 @@ function draw() {
   setupCamera();
 
   game.displayBoard();
+  game.drawTetrominos();
   game.displayPoints();
   game.update();
-  
-  drawTetrominos();
 }
 
 function keyPressed(){
-  activeTetromino.keyPressed(keyCode);
-}
-
-function drawTetrominos(){
-  for(let tetromino of tetrominos){
-    tetromino.render();
-  }
+  game.activeTetromino.keyPressed(keyCode);
 }
 
 function setupCamera(){
