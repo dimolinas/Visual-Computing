@@ -6,8 +6,6 @@ class Game{
     this.points = 0;
     this.fallFrecuency = 1000;
     
-    this.displayButtons();
-    
     this.board = new Board();
     this.activeTetromino = null;
     this.tetrominos = [];
@@ -37,7 +35,7 @@ class Game{
   
   displayBoard(){
     this.board.drawLines();
-    this.board.draw();
+    this.board.drawCubes();
   }
   
   drawTetrominos(){
@@ -71,6 +69,7 @@ class Game{
   }
   
   init(){
+    this.displayButtons();
     this.activeTetromino = factory.createRandomTetromino();
     this.tetrominos.push(this.activeTetromino);
   }

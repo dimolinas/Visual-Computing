@@ -13,6 +13,16 @@ class Board extends Cube{
   
   applyGravity(){
     setTimeout(this.applyGravity.bind(this), game.fallFrecuency);
+    for(let k = 1; k > dimension; k++){
+      for(let i = 0; i < dimension; i++){
+        for(let j = 0; j < dimension; j++){
+          if(!this.matrix[i][j][k-1].active && this.matrix[i][j][k].active){
+            this.matrix[i][j][k-1] = this.matrix[i][j][k];
+            this.matrix[i][j][k].active = false;
+          }
+        }
+      }
+    }
   }
   
   verifyCubeInLayer(k){
@@ -47,13 +57,12 @@ class Board extends Cube{
     }
   }
   
-  draw(){
+  drawCubes(){
     for(let i = 0; i < this.matrix.length; i++){
       for(let j = 0; j < this.matrix[i].length; j++){
         for(let k = 0; k < this.matrix[i][j].length; k++){
           if(this.matrix[i][j][k].active === true){
             this.matrix[i][j][k].drawCube(i, j, k);
-            
           }
         }
       }

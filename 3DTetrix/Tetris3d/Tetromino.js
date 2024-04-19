@@ -32,24 +32,36 @@ class Tetromino extends Cube{
   
   saveInMemory(){
     for(let cell of this.cells){
-      print(cell);
       game.board.matrix[cell.x][cell.y][cell.z].active = true;
       game.board.matrix[cell.x][cell.y][cell.z].colorCube = this.colorCube;
     }
   }
   
-  moveBackward(dir){
-    if(game.play && this.active){
-      for(let cell of this.cells){
-      cell[dir] -= 1;
-      }
+  move(dir, increment) {
+    if (game.play && this.active) {
+        for (let cell of this.cells) {
+            cell[dir] += increment;
+        }
     }
+}
+  
+  moveBackward(dir){
+    this.move(dir, -1);
   }
   
   moveForward(dir){
-    if(game.play && this.active){
+    this.move(dir, 1);
+  }
+  
+  rotateZ(){
+    print("rotateZ");
+    if(this.active){
+      let angle = HALF_PI;
       for(let cell of this.cells){
-      cell[dir] += 1;
+        let x = cell.x * cos(angle) - cell.y * sin(angle);
+        let y = cell.x * sin(angle) + cell.y * cos(angle);
+        cell.x = Math.round(x);
+        cell.y = Math.round(y);
       }
     }
   }
@@ -124,6 +136,8 @@ class Tetromino extends Cube{
       if(this.verifyForwardBounds('y') && this.verifyMemory('forwardY')) this.moveForward('y');
     } else if (keyCode === DOWN_ARROW) {
       if(this.verifyBackwardBounds('y') && this.verifyMemory('backwardY')) this.moveBackward('y');
+    } else if (key === 'e'){
+      this.rotateZ();
     }
   } 
 }
