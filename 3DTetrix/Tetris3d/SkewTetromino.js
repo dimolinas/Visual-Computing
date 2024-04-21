@@ -1,7 +1,7 @@
 class SkewTetromino extends Tetromino{
-  constructor(){
+  constructor(colorTetromino){
     super();
-    this.colorCube = '#ff0000';
+    this.colorCube = colorTetromino;
     this.cells = [ 
       createVector(0, 1, 10),
       createVector(1, 1, 10),

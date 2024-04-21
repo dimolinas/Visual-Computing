@@ -2,17 +2,11 @@ class Board extends Cube{
   constructor(){
     super();
     this.matrix = this.create3dCubeMatrix();
-    setTimeout(this.applyGravity.bind(this), 1000);
-    
-    for(let i = 0; i < this.matrix.length; i++){
-      for(let j = 0; j < this.matrix.length; j++){
-        this.matrix[i][j][4].active = true;
-      }
-    }
+    //setTimeout(this.applyGravity.bind(this), 1000);
   }
   
   applyGravity(){
-    setTimeout(this.applyGravity.bind(this), game.fallFrecuency);
+    //setTimeout(this.applyGravity.bind(this), game.fallFrecuency);
     for(let k = 1; k < dimension; k++){
       for(let i = 0; i < dimension; i++){
         for(let j = 0; j < dimension; j++){

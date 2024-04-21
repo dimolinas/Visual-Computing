@@ -1,20 +1,24 @@
 class TetrominoFactory{
-  constructor(){}
+  constructor(){
+    this.colors = ['#ffa500', '#ff0000', '#ffff00', '#0099FF', '#800080']
+  }
   
   createRandomTetromino(){
-    const choose = Math.floor(Math.random() * 4);
+    const choose = Math.floor(Math.random() * 5);
+    const colorTetromino = this.colors[Math.floor(Math.random() * 5)];
+    print(choose);
     
     switch(choose){
       case 0:
-        return new LTetromino();
+        return new LTetromino(colorTetromino);
       case 1:
-        return new SkewTetromino();
+        return new SkewTetromino(colorTetromino);
       case 2:
-        return new SquareTetromino();
+        return new SquareTetromino(colorTetromino);
       case 3:
-        return new StraightTetromino();
+        return new StraightTetromino(colorTetromino);
       case 4:
-        return new TTetromino();
+        return new TTetromino(colorTetromino);
     }   
   }
 }

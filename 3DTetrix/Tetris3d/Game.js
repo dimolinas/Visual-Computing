@@ -47,7 +47,8 @@ class Game{
   update(){
     for(let k = 0; k < dimension; k++){
       if(this.board.verifyIsLayerComplete(k)){
-        //this.board.cleanLayer(k);
+        this.board.cleanLayer(k);
+        this.board.applyGravity();
         this.points += (k+1) * 100; 
       }
     }
