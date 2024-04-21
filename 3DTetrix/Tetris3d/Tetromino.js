@@ -54,15 +54,146 @@ class Tetromino extends Cube{
   }
   
   rotateZ(){
-    print("rotateZ");
     if(this.active){
+      
       let angle = HALF_PI;
+      let centroid = this.calculateCentroid('Z');
+      let newCells = [];
+      
       for(let cell of this.cells){
-        let x = cell.x * cos(angle) - cell.y * sin(angle);
-        let y = cell.x * sin(angle) + cell.y * cos(angle);
-        cell.x = Math.round(x);
-        cell.y = Math.round(y);
+        
+        let x = cell.x - centroid.x;
+        let y = cell.y - centroid.y;
+        
+        let rotatedX = x * cos(angle) - y * sin(angle);
+        let rotatedY = x * sin(angle) + y * cos(angle);
+        
+        let newX = Math.round(rotatedX + centroid.x);
+        let newY = Math.round(rotatedY + centroid.y);
+        
+        if(this.isWithBounds(newX, newY, cell.z)){
+          newCells.push(createVector(newX, newY, cell.z));
+        }else{
+          return;
+        }
       }
+      this.cells = newCells;
+    } 
+  }
+  
+  rotateX(){
+    if(this.active){
+      
+      let angle = HALF_PI;
+      let centroid = this.calculateCentroid('X');
+      let newCells = [];
+      
+      for(let cell of this.cells){
+        
+        let y = cell.y - centroid.y;
+        let z = cell.z - centroid.z;
+        
+        let rotatedY = y * cos(angle) - z * sin(angle);
+        let rotatedZ = y * sin(angle) + z * cos(angle);
+        
+        let newY = Math.round(rotatedY + centroid.y);
+        let newZ = Math.round(rotatedZ + centroid.z);
+        
+        
+        if(this.isWithBounds(cell.x, newY, newZ)){
+          newCells.push(createVector(cell.x, newY, newZ));
+        }else{
+          return;
+        }
+      }
+      this.cells = newCells;
+    } 
+  }
+  
+  rotateY(){
+    if(this.active){
+      
+      let angle = HALF_PI;
+      let centroid = this.calculateCentroid('Y');
+      let newCells = [];
+      
+      for(let cell of this.cells){
+        
+        let x = cell.x - centroid.x;
+        let z = cell.z - centroid.z;
+        
+        let rotatedX = x * cos(angle) + z * sin(angle);
+        let rotatedZ = -x * sin(angle) + z * cos(angle);
+        
+        let newX = Math.round(rotatedX + centroid.x);
+        let newZ = Math.round(rotatedZ + centroid.z);
+        
+        
+        if(this.isWithBounds(newX, cell.y, newZ)){
+          newCells.push(createVector(newX, cell.y, newZ));
+        }else{
+          return;
+        }
+      }
+      this.cells = newCells;
+    } 
+  }
+  
+  isWithBounds(x, y, z){
+    return x >= 0 && x < dimension && y >= 0 && y < dimension && z >= 0 && z < dimension;  
+  }
+  
+  calculateCentroidXY(){
+    let sumX = 0, sumY = 0;
+    for(let cell of this.cells){
+      sumX += cell.x;
+      sumY += cell.y;
+    }
+    return createVector(Math.round(sumX / this.cells.length), Math.round(sumY / this.cells.length));
+  }
+  
+   calculateCentroidYZ(){
+    let sumY = 0, sumZ = 0;
+    for(let cell of this.cells){
+      sumY += cell.y;
+      sumZ += cell.z;
+    }
+    return createVector(this.cells[0].x, Math.round(sumY / this.cells.length), Math.round(sumZ / this.cells.length));
+   }
+   
+   calculateCentroidYZ(){
+    let sumY = 0, sumZ = 0;
+    for(let cell of this.cells){
+      sumY += cell.y;
+      sumZ += cell.z;
+    }
+    return createVector(this.cells[0].x, Math.round(sumY / this.cells.length), Math.round(sumZ / this.cells.length));
+   }
+  
+  calculateCentroid(axis){
+    let sumX = 0;
+    let sumY = 0;
+    let sumZ = 0;
+    
+    const lengthCells = this.cells.length;
+    
+    for(let cell of this.cells){
+      sumX += cell.x;
+      sumY += cell.y;
+      sumZ += cell.z;
+    }
+    
+    let centerX = sumX / lengthCells;
+    let centerY = sumY / lengthCells;
+    let centerZ = sumZ / lengthCells;
+    
+    switch(axis){
+      case 'X':
+        return createVector(centerX, Math.round(centerY), Math.round(centerZ));
+      case 'Y':
+        return createVector(Math.round(centerX), centerY, Math.round(centerZ));
+      case 'Z':
+        return createVector(Math.round(centerX), Math.round(centerY), centerZ);
     }
   }
   
@@ -138,6 +269,10 @@ class Tetromino extends Cube{
       if(this.verifyBackwardBounds('y') && this.verifyMemory('backwardY')) this.moveBackward('y');
     } else if (key === 'e'){
       this.rotateZ();
+    }else if (key === 'w'){
+      this.rotateY();
+    }else if (key === 'q'){
+      this.rotateX();
     }
   } 
 }
