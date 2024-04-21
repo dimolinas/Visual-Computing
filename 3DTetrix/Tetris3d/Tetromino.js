@@ -99,7 +99,6 @@ class Tetromino extends Cube{
         let newY = Math.round(rotatedY + centroid.y);
         let newZ = Math.round(rotatedZ + centroid.z);
         
-        
         if(this.isWithBounds(cell.x, newY, newZ)){
           newCells.push(createVector(cell.x, newY, newZ));
         }else{
@@ -128,7 +127,6 @@ class Tetromino extends Cube{
         let newX = Math.round(rotatedX + centroid.x);
         let newZ = Math.round(rotatedZ + centroid.z);
         
-        
         if(this.isWithBounds(newX, cell.y, newZ)){
           newCells.push(createVector(newX, cell.y, newZ));
         }else{
@@ -142,33 +140,6 @@ class Tetromino extends Cube{
   isWithBounds(x, y, z){
     return x >= 0 && x < dimension && y >= 0 && y < dimension && z >= 0 && z < dimension;  
   }
-  
-  calculateCentroidXY(){
-    let sumX = 0, sumY = 0;
-    for(let cell of this.cells){
-      sumX += cell.x;
-      sumY += cell.y;
-    }
-    return createVector(Math.round(sumX / this.cells.length), Math.round(sumY / this.cells.length));
-  }
-  
-   calculateCentroidYZ(){
-    let sumY = 0, sumZ = 0;
-    for(let cell of this.cells){
-      sumY += cell.y;
-      sumZ += cell.z;
-    }
-    return createVector(this.cells[0].x, Math.round(sumY / this.cells.length), Math.round(sumZ / this.cells.length));
-   }
-   
-   calculateCentroidYZ(){
-    let sumY = 0, sumZ = 0;
-    for(let cell of this.cells){
-      sumY += cell.y;
-      sumZ += cell.z;
-    }
-    return createVector(this.cells[0].x, Math.round(sumY / this.cells.length), Math.round(sumZ / this.cells.length));
-   }
   
   calculateCentroid(axis){
     let sumX = 0;

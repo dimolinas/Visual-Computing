@@ -1,10 +1,8 @@
 class TetrominoFactory{
-  constructor(){
-  }
+  constructor(){}
   
   createRandomTetromino(){
     const choose = Math.floor(Math.random() * 4);
-    print(choose);
     
     switch(choose){
       case 0:

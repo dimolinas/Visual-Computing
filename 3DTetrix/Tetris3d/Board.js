@@ -13,12 +13,14 @@ class Board extends Cube{
   
   applyGravity(){
     setTimeout(this.applyGravity.bind(this), game.fallFrecuency);
-    for(let k = 1; k > dimension; k++){
+    for(let k = 1; k < dimension; k++){
       for(let i = 0; i < dimension; i++){
         for(let j = 0; j < dimension; j++){
-          if(!this.matrix[i][j][k-1].active && this.matrix[i][j][k].active){
+          if(this.matrix[i][j][k].active && !this.matrix[i][j][k-1].active){
             this.matrix[i][j][k-1] = this.matrix[i][j][k];
+            this.matrix[i][j][k] = new Cube();
             this.matrix[i][j][k].active = false;
+            this.matrix[i][j][k-1].active = true;
           }
         }
       }
