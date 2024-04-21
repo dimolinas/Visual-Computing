@@ -1,7 +1,6 @@
 class TTetromino extends Tetromino{
   constructor(colorTetromino){
     super();
-    print("TTetromino");
     this.colorCube = colorTetromino;
     this.cells = [ 
       createVector(0, 0, 10),

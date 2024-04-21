@@ -11,7 +11,6 @@ class Game{
     this.tetrominos = [];
   }
   
-  
   displayButtons(){
     let buttonPlay = createButton('Play');
     buttonPlay.id('playButton');
@@ -50,6 +49,7 @@ class Game{
         this.board.cleanLayer(k);
         this.board.applyGravity();
         this.points += (k+1) * 100; 
+        this.fallFrecuency /= 2;
       }
     }
     this.checkLost();

@@ -6,8 +6,7 @@ class TetrominoFactory{
   createRandomTetromino(){
     const choose = Math.floor(Math.random() * 5);
     const colorTetromino = this.colors[Math.floor(Math.random() * 5)];
-    print(choose);
-    
+   
     switch(choose){
       case 0:
         return new LTetromino(colorTetromino);

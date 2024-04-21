@@ -5,7 +5,7 @@ class Tetromino extends Cube{
     this.active = true;
     this.blocked = false;
     this.cells = [];
-    setTimeout(this.falling.bind(this), game.fallFrecuency);
+    this.idTimeOut = setTimeout(this.falling.bind(this), game.fallFrecuency);
   }
   
   render(){
@@ -17,7 +17,7 @@ class Tetromino extends Cube{
   }
   
   falling(){
-    setTimeout(this.falling.bind(this), 1000);
+    setTimeout(this.falling.bind(this), game.fallFrecuency);
      if(this.verifyBackwardBounds('z') && this.verifyMemory('backwardZ') && this.active){
        this.moveBackward('z');
      }else{
@@ -230,20 +230,33 @@ class Tetromino extends Cube{
   }
   
   keyPressed(keycode){
-    if (keyCode === RIGHT_ARROW) {
-      if(this.verifyForwardBounds('x') && this.verifyMemory('forwardX')) this.moveForward('x');
-    } else if (keyCode === LEFT_ARROW) {
-      if(this.verifyBackwardBounds('x') && this.verifyMemory('backwardX')) this.moveBackward('x');
-    } else if (keyCode === UP_ARROW) {
-      if(this.verifyForwardBounds('y') && this.verifyMemory('forwardY')) this.moveForward('y');
-    } else if (keyCode === DOWN_ARROW) {
-      if(this.verifyBackwardBounds('y') && this.verifyMemory('backwardY')) this.moveBackward('y');
-    } else if (key === 'e'){
-      this.rotateZ();
-    }else if (key === 'w'){
-      this.rotateY();
-    }else if (key === 'q'){
-      this.rotateX();
+    switch(keycode){
+      case RIGHT_ARROW:
+        if(this.verifyForwardBounds('x') && this.verifyMemory('forwardX')) this.moveForward('x');
+        break;
+      case LEFT_ARROW:
+        if(this.verifyBackwardBounds('x') && this.verifyMemory('backwardX')) this.moveBackward('x');
+        break; 
+      case UP_ARROW:
+        if(this.verifyForwardBounds('y') && this.verifyMemory('forwardY')) this.moveForward('y');
+        break;
+      case DOWN_ARROW:
+        if(this.verifyBackwardBounds('y') && this.verifyMemory('backwardY')) this.moveBackward('y');
+        break;
+      case 32:
+        if(this.verifyBackwardBounds('z') && this.verifyMemory('backwardZ')) this.moveBackward('z');
+        break;
+      case 69 :
+        //e
+        this.rotateZ();
+        break;
+      case 87:
+        //w
+        this.rotateY();
+        break;
+      case 81:
+        //q
+        this.rotateX();  
     }
   } 
 }
