@@ -1,16 +1,16 @@
 import './style.css';
 import * as dat from 'dat.gui';
 import * as THREE from 'three';
+import { Spector } from 'spectorjs';
 
 import * as BufferGeometryUtils from '../three/addons/utils/BufferGeometryUtils.js';
 import { OrbitControls } from '../three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from '../three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from '../three/addons/loaders/DRACOLoader.js';
 
-/*
-* Base
-*/
-// Debug
+const spector = new Spector();
+//spector.displayUI();
+
 const gui = new dat.GUI({
     width: 400
 });
@@ -20,7 +20,7 @@ const canvas = document.querySelector('canvas.webgl');
 const scene = new THREE.Scene();
 
 //scene.background = new THREE.Color("whiteSmoke");
-scene.add(new THREE.AxesHelper(5))
+//scene.add(new THREE.AxesHelper(5))
 
 //texture loader
 const textureLoader = new THREE.TextureLoader();
@@ -38,28 +38,26 @@ const bakedTexture = textureLoader.load("baked.jpg");
 bakedTexture.flipY = false;
 bakedTexture.encoding = THREE.sRGBEncoding;
 
-
-//Material
 const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture });
-
-//Pole Light Material
+const portalLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide});
 const poleLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5});
 
 
-//Model
 gltfLoader.load(
-    './portal.glb',
+    './portalOptim.glb',
     (gltf) => {
     
         gltf.scene.traverse((child) => {
-            child.material = bakedMaterial;
             console.log(child);
         });
 
-        const portalLightMesh = gltf.scene.children.find(child => child.name === "Circle");
-        const poleLightAMesh = gltf.scene.children.find(child => child.name === "Cube006");
-        const poleLightBMesh = gltf.scene.children.find(child => child.name === "Cube014");
+        const bakedMesh = gltf.scene.children.find((child) => child.name === 'baked');
+        const portalLightMesh = gltf.scene.children.find(child => child.name === "portalLight");
+        const poleLightAMesh = gltf.scene.children.find(child => child.name === "poleLightA");
+        const poleLightBMesh = gltf.scene.children.find(child => child.name === "poleLightB");
 
+        bakedMesh.material = bakedMaterial;
+        portalLightMesh.material = portalLightMaterial;
         poleLightAMesh.material = poleLightMaterial;
         poleLightBMesh.material = poleLightMaterial;
 

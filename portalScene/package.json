@@ -12,6 +12,7 @@
   "license": "ISC",
   "dependencies": {
     "dat.gui": "^0.7.9",
+    "spectorjs": "^0.9.30",
     "three": "^0.164.1",
     "vite": "^5.2.11",
     "vite-plugin-glsl": "^1.3.0"
