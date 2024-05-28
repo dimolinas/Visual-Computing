@@ -19,7 +19,7 @@ const gui = new dat.GUI({
 const canvas = document.querySelector('canvas.webgl');
 const scene = new THREE.Scene();
 
-scene.background = new THREE.Color("whiteSmoke");
+//scene.background = new THREE.Color("whiteSmoke");
 scene.add(new THREE.AxesHelper(5))
 
 //texture loader
@@ -33,20 +33,39 @@ dracoLoader.setDecoderPath('draco/');
 const gltfLoader = new GLTFLoader();
 gltfLoader.setDRACOLoader(dracoLoader);
 
+//Texture
+const bakedTexture = textureLoader.load("baked.jpg");
+bakedTexture.flipY = false;
+bakedTexture.encoding = THREE.sRGBEncoding;
+
+
+//Material
+const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture });
+
+//Pole Light Material
+const poleLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5});
+
+
 //Model
 gltfLoader.load(
     './portal.glb',
     (gltf) => {
+    
+        gltf.scene.traverse((child) => {
+            child.material = bakedMaterial;
+            console.log(child);
+        });
+
+        const portalLightMesh = gltf.scene.children.find(child => child.name === "Circle");
+        const poleLightAMesh = gltf.scene.children.find(child => child.name === "Cube006");
+        const poleLightBMesh = gltf.scene.children.find(child => child.name === "Cube014");
+
+        poleLightAMesh.material = poleLightMaterial;
+        poleLightBMesh.material = poleLightMaterial;
+
         scene.add(gltf.scene);
     }
-)
-
-// Object
-const geometry = new THREE.BoxGeometry(1, 1, 1);
-const material = new THREE.MeshBasicMaterial({ color: 0xff0000 });
-const mesh = new THREE.Mesh(geometry, material);
-
-scene.add(mesh);
+);
 
 // Sizes
 const sizes = {
@@ -88,7 +107,6 @@ scene.add(camera);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 
-
 // Renderer
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
@@ -97,6 +115,7 @@ const renderer = new THREE.WebGLRenderer({
 
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.outputEncoding = THREE.sRGBEncoding;
 
 /**
  * Animate
