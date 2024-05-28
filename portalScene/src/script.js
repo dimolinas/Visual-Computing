@@ -11,6 +11,7 @@ import { DRACOLoader } from '../three/addons/loaders/DRACOLoader.js';
 const spector = new Spector();
 //spector.displayUI();
 
+const debugObject = {};
 const gui = new dat.GUI({
     width: 400
 });
@@ -38,7 +39,7 @@ const bakedTexture = textureLoader.load("baked.jpg");
 bakedTexture.flipY = false;
 bakedTexture.encoding = THREE.sRGBEncoding;
 
-const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture });
+const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture, side: THREE.DoubleSide});
 const portalLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide});
 const poleLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffe5});
 
@@ -64,6 +65,25 @@ gltfLoader.load(
         scene.add(gltf.scene);
     }
 );
+
+const fireFliesGeometry = new THREE.BufferGeometry();
+const fireFliesCount = 30;
+const positionArray = new Float32Array(fireFliesCount * 3);
+
+for(let i = 0; i < fireFliesGeometry; i++){
+    positionArray[i * 3 + 0] = Math.random() * 100;
+    positionArray[i * 3 + 1] = Math.random() * 100;
+    positionArray[i * 3 + 2] = Math.random() * 100;
+}
+
+console.log(positionArray);
+
+fireFliesGeometry.setAttribute('position', new THREE.BufferAttribute(positionArray, 3));
+
+const fireFliesMaterial = new THREE.PointsMaterial({size: 0.1, sizeAttenuation: true});
+const fireFlies = new THREE.Points(fireFliesGeometry, fireFliesMaterial);
+
+scene.add(fireFlies);
 
 // Sizes
 const sizes = {
@@ -111,9 +131,16 @@ const renderer = new THREE.WebGLRenderer({
     antialias: true
 });
 
+renderer.outputEncoding = THREE.sRGBEncoding;
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.outputEncoding = THREE.sRGBEncoding;
+
+debugObject.clearColor = '#bebea2';
+renderer.setClearColor(debugObject.clearColor);
+
+gui.addColor(debugObject, 'clearColor').onChange(() => {
+    renderer.setClearColor(debugObject.clearColor);
+});
 
 /**
  * Animate
