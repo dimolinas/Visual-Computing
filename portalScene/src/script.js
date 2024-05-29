@@ -1,12 +1,19 @@
-import './style.css';
+//import './style.css';
 import * as dat from 'dat.gui';
 import * as THREE from 'three';
 import { Spector } from 'spectorjs';
 
 import * as BufferGeometryUtils from '../three/addons/utils/BufferGeometryUtils.js';
 import { OrbitControls } from '../three/addons/controls/OrbitControls.js';
+
 import { GLTFLoader } from '../three/addons/loaders/GLTFLoader.js';
 import { DRACOLoader } from '../three/addons/loaders/DRACOLoader.js';
+
+import firefliesVertexShader from "./shaders/fireflies/vertex.glsl";
+import firefliesFragmentShader from "./shaders/fireflies/fragment.glsl";
+
+console.log(firefliesVertexShader);
+
 
 const spector = new Spector();
 //spector.displayUI();
