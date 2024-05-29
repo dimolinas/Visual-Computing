@@ -67,13 +67,13 @@ gltfLoader.load(
 );
 
 const fireFliesGeometry = new THREE.BufferGeometry();
-const fireFliesCount = 30;
+const fireFliesCount = 40;
 const positionArray = new Float32Array(fireFliesCount * 3);
 
-for(let i = 0; i < fireFliesGeometry; i++){
-    positionArray[i * 3 + 0] = Math.random() * 100;
-    positionArray[i * 3 + 1] = Math.random() * 100;
-    positionArray[i * 3 + 2] = Math.random() * 100;
+for(let i = 0; i < fireFliesCount; i++){
+    positionArray[i * 3 + 0] = (Math.random() - 0.5) * 4;
+    positionArray[i * 3 + 1] = Math.random() * 1.5;
+    positionArray[i * 3 + 2] = (Math.random()- 0.5) * 4;
 }
 
 console.log(positionArray);
