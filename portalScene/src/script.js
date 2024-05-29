@@ -1,4 +1,4 @@
-//import './style.css';
+import './style.css';
 import * as dat from 'dat.gui';
 import * as THREE from 'three';
 import { Spector } from 'spectorjs';
@@ -12,9 +12,6 @@ import { DRACOLoader } from '../three/addons/loaders/DRACOLoader.js';
 import firefliesVertexShader from "./shaders/fireflies/vertex.glsl";
 import firefliesFragmentShader from "./shaders/fireflies/fragment.glsl";
 
-console.log(firefliesVertexShader);
-
-
 const spector = new Spector();
 //spector.displayUI();
 
@@ -23,25 +20,19 @@ const gui = new dat.GUI({
     width: 400
 });
 
-// Canvas
 const canvas = document.querySelector('canvas.webgl');
 const scene = new THREE.Scene();
 
 //scene.background = new THREE.Color("whiteSmoke");
-//scene.add(new THREE.AxesHelper(5))
 
-//texture loader
 const textureLoader = new THREE.TextureLoader();
 
-//Draco loader
 const dracoLoader = new DRACOLoader();
 dracoLoader.setDecoderPath('draco/');
 
-//GLTF loader
 const gltfLoader = new GLTFLoader();
 gltfLoader.setDRACOLoader(dracoLoader);
 
-//Texture
 const bakedTexture = textureLoader.load("baked.jpg");
 bakedTexture.flipY = false;
 bakedTexture.encoding = THREE.sRGBEncoding;
@@ -76,63 +67,67 @@ gltfLoader.load(
 const fireFliesGeometry = new THREE.BufferGeometry();
 const fireFliesCount = 40;
 const positionArray = new Float32Array(fireFliesCount * 3);
+const scaleArray = new Float32Array(fireFliesCount);
+
 
 for(let i = 0; i < fireFliesCount; i++){
     positionArray[i * 3 + 0] = (Math.random() - 0.5) * 4;
     positionArray[i * 3 + 1] = Math.random() * 1.5;
     positionArray[i * 3 + 2] = (Math.random()- 0.5) * 4;
+
+    scaleArray[i] = Math.random();
 }
 
-console.log(positionArray);
-
 fireFliesGeometry.setAttribute('position', new THREE.BufferAttribute(positionArray, 3));
+fireFliesGeometry.setAttribute('aScale', new THREE.BufferAttribute(scaleArray, 1));
 
-const fireFliesMaterial = new THREE.PointsMaterial({size: 0.1, sizeAttenuation: true});
+const fireFliesMaterial = new THREE.ShaderMaterial({
+    uniforms:{
+        uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
+        uSize: { value: 100 },
+        uTime: { value: 0 }
+    },
+    vertexShader: firefliesVertexShader,
+    fragmentShader: firefliesFragmentShader,
+    transparent: true,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+});
+
+gui.add(fireFliesMaterial.uniforms.uSize, 'value').min(0).max(500).step(1).name('firefliesSize');
+
 const fireFlies = new THREE.Points(fireFliesGeometry, fireFliesMaterial);
 
 scene.add(fireFlies);
 
-// Sizes
 const sizes = {
     width: window.innerWidth,
     height: window.innerHeight
 }
 
 window.addEventListener("resize", () => {
-    // Update sizes
     sizes.width = window.innerWidth;
     sizes.height = window.innerHeight;
   
-    // Update camera
     camera.aspect = sizes.width / sizes.height;
     camera.updateProjectionMatrix();
   
-    // Update renderer
     renderer.setSize(sizes.width, sizes.height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    fireFliesMaterial.uniforms.uPixelRatio.value = Math.min(window.devicePixelRatio, 2);
   });
 
-/**
- * Camera
- */
-// Base camera
-const camera = new THREE.PerspectiveCamera(
-    45,
-    sizes.width / sizes.height,
-    0.1,
-    100
-);
+const camera = new THREE.PerspectiveCamera(45, sizes.width / sizes.height, 0.1, 100);
 
 camera.position.x = 4;
 camera.position.y = 2;
 camera.position.z = 4;
 scene.add(camera);
   
-// Controls
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
 
-// Renderer
 const renderer = new THREE.WebGLRenderer({
     canvas: canvas,
     antialias: true
@@ -156,6 +151,9 @@ const clock = new THREE.Clock();
 
 const tick = () => {
   const elapsedTime = clock.getElapsedTime();
+
+  //Update Materials
+  fireFliesMaterial.uniforms.uTime.value = elapsedTime;
 
   // Update controls
   controls.update();
