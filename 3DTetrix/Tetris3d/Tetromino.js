@@ -237,10 +237,10 @@ class Tetromino extends Cube{
       case LEFT_ARROW:
         if(this.verifyBackwardBounds('x') && this.verifyMemory('backwardX')) this.moveBackward('x');
         break; 
-      case UP_ARROW:
+      case DOWN_ARROW:
         if(this.verifyForwardBounds('y') && this.verifyMemory('forwardY')) this.moveForward('y');
         break;
-      case DOWN_ARROW:
+      case UP_ARROW:
         if(this.verifyBackwardBounds('y') && this.verifyMemory('backwardY')) this.moveBackward('y');
         break;
       case 32:
