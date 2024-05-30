@@ -27,9 +27,3 @@ https://github.com/dimolinas/Visual-Computing/assets/55567041/c9cd82cd-5483-4d56
 - **W**: Rotate tetromino around Y-axis
 - **Q**: Rotate tetromino around X-axis
 
-## Good Practices
-
-- **Modular Code**: The code is organized into classes and functions to promote reusability and readability.
-- **Comments**: The code includes comments to explain the functionality of different parts of the code.
-- **Consistent Naming Conventions**: Variables and functions are named consistently to improve code readability.
-- **Error Handling**: The code includes checks to ensure that tetrominoes do not move out of bounds or overlap with other tetrominoes.
